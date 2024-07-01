@@ -12,9 +12,14 @@ console.log("Setting up routes...");
 
 app.use("/numbers", numberController);
 
-const PORT = process.env.PORT;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const PORT = process.env.PORT || 0;
+const server = app.listen(PORT, () => {
+  const actualPort = server.address(); // Use optional chaining to safely access port
+  if (actualPort) {
+    console.log(`Server running on port ${actualPort}`);
+  } else {
+    console.error("Failed to retrieve server port.");
+  }
 });
 
 export default app;
